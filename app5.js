@@ -3,6 +3,7 @@ const app = express();
 
 app.set('view engine', 'ejs');
 app.use("/public", express.static(__dirname + "/public"));
+app.use(express.urlencoded({ extended: true }));
 
 let station = [
   { id: 1, code: "JE01", name: "東京駅" },
@@ -23,21 +24,39 @@ let station2 = [
   { id: 7, code: "JE18", name: "蘇我駅", change: "内房線，外房線", passengers: 31328, distance: 43.0 },
 ];
 
+// 一覧
 app.get("/keiyo2", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
   res.render('keiyo2', { data: station2 });
 });
+//app.get("/keiyo2", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+//  res.render('db2', { data: station2 });
+//});
 
+// Create
+app.get("/keiyo2/create", (req, res) => {
+  res.redirect('/public/keiyo2_new.html');
+});
+// Read
 app.get("/keiyo2/:number", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
   const number = req.params.number;
   const detail = station2[number];
-  res.render('keiyo2_detail', { data: detail });
+  res.render('keiyo2_detail', { id: number, data: detail });
+});
+// Delete
+app.get("/keiyo2/delete/:number", (req, res) => {
+  // 本来は削除の確認ページを表示する
+  // 本来は削除する番号が存在するか厳重にチェックする
+  // 本来ならここにDBとのやり取りが入る
+  station2.splice(req.params.number, 1);
+  res.redirect('/keiyo2');
 });
 
 app.get("/keiyo", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  res.render('db2', { data: station });
+  res.render('db1', { data: station });
 });
 
 app.get("/keiyo_add", (req, res) => {
@@ -46,7 +65,7 @@ app.get("/keiyo_add", (req, res) => {
   let name = req.query.name;
   let newdata = { id: id, code: code, name: name };
   station.push(newdata);
-  //res.redirect('/public/keiyo_add.html');
+  res.redirect('/public/keiyo_add.html');
   res.render('db1', { data: station });
 });
 
