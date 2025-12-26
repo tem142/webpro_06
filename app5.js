@@ -52,16 +52,17 @@ app.get("/idol/:number", (req, res) => {
 
 // Delete confirmation
 app.get("/idol/deletek/:number", (req, res) => {
-
-  res.render('idol_delete', { id: req.params.number, data: idol[req.params.number] });
+  const number = req.params.number;
+  const detail = idol[number];
+  res.render('idol_delete', { id: number, data: detail });
 });
 // Delete
-app.get("/keiyo2/delete/:number", (req, res) => {
+app.get("/idol/delete/:number", (req, res) => {
   // 本来は削除の確認ページを表示する
   // 本来は削除する番号が存在するか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
-  station2.splice(req.params.number, 1);
-  res.redirect('/keiyo2');
+  idol.splice(req.params.number, 1);
+  res.redirect('/idol');
 });
 
 // Create
@@ -92,11 +93,13 @@ app.get("/idol/edit/:number", (req, res) => {
 app.post("/idol/update/:number", (req, res) => {
   // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
-  idol[req.params.number].code = req.body.code;
   idol[req.params.number].name = req.body.name;
-  idol[req.params.number].change = req.body.change;
-  idol[req.params.number].passengers = req.body.passengers;
-  idol[req.params.number].distance = req.body.distance;
+  idol[req.params.number].age = req.body.age;
+  idol[req.params.number].size = req.body.size;
+  idol[req.params.number].weight = req.body.weight;
+  idol[req.params.number].song = req.body.song;
+  idol[req.params.number].period = req.body.period;
+  idol[req.params.number].explanation = req.body.explanation;
   console.log(idol);
   res.redirect('/idol');
 });
