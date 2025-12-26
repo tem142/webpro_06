@@ -1,0 +1,32 @@
+<!Doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>idol.ejs</title>
+</head>
+
+<body>
+    <h2>初星学園在学アイドル名簿</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>名簿</th>
+        </tr>
+        <% let number=0 %>
+            <% for( let row of data ) { %>
+                <tr>
+                    <td>
+                        <%= row.id %>
+                    </td>
+                    <td><a href="/idol/<%= number %>">
+                            <%= row.name %>
+                        </a></td>
+                </tr>
+                <% number +=1 %>
+                    <% } %>
+    </table>
+    <a href="/idol/create">新入生登録</a>
+</body>
+
+</html>

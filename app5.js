@@ -44,10 +44,61 @@ app.get("/idol/create", (req, res) => {
 });
 
 // 詳細
-app.get("/idol/:id", (req, res) => {
+app.get("/idol/:number", (req, res) => {
   const number = req.params.number;
   const detail = idol[number];
   res.render('idol_detail', { id: number, data: detail });
+});
+
+// Delete confirmation
+app.get("/idol/deletek/:number", (req, res) => {
+
+  res.render('idol_delete', { id: req.params.number, data: idol[req.params.number] });
+});
+// Delete
+app.get("/keiyo2/delete/:number", (req, res) => {
+  // 本来は削除の確認ページを表示する
+  // 本来は削除する番号が存在するか厳重にチェックする
+  // 本来ならここにDBとのやり取りが入る
+  station2.splice(req.params.number, 1);
+  res.redirect('/keiyo2');
+});
+
+// Create
+app.post("/idol", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const id = idol.length + 1;
+  const name = req.body.name;
+  const age = req.body.age;
+  const size = req.body.size;
+  const weight = req.body.weight;
+  const song = req.body.song;
+  const period = req.body.period;
+  const explanation = req.body.explanation;
+  idol.push({ id: id, name: name, age: age, size: size, weight: weight, song: song, period: period, explanation: explanation });
+  console.log(idol);
+  res.render('idol', { data: idol });
+});
+
+// Edit
+app.get("/idol/edit/:number", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const number = req.params.number;
+  const detail = idol[number];
+  res.render('idol_edit', { id: number, data: detail });
+});
+
+// Update
+app.post("/idol/update/:number", (req, res) => {
+  // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
+  // 本来ならここにDBとのやり取りが入る
+  idol[req.params.number].code = req.body.code;
+  idol[req.params.number].name = req.body.name;
+  idol[req.params.number].change = req.body.change;
+  idol[req.params.number].passengers = req.body.passengers;
+  idol[req.params.number].distance = req.body.distance;
+  console.log(idol);
+  res.redirect('/idol');
 });
 
 let song = [

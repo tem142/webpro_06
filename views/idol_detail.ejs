@@ -24,32 +24,50 @@
             </td>
         </tr>
         <tr>
-            <td>CODE</td>
-            <td>
-                <%= data.code %>
-            </td>
-        </tr>
-        <tr>
-            <td>駅名</td>
+            <td>名前</td>
             <td>
                 <%= data.name %>
             </td>
         </tr>
         <tr>
-            <td>乗り換え線</td>
+            <td>年齢</td>
             <td>
-                <%= data.change %>
+                <%= data.age %><a>歳</a>
             </td>
         </tr>
         <tr>
-            <td>東京駅からの距離</td>
+            <td>身長</td>
             <td>
-                <%= data.distance %>
+                <%= data.size %><a>cm</a>
+            </td>
+        </tr>
+        <tr>
+            <td>体重</td>
+            <td>
+                <%= data.weight %><a>kg</a>
+            </td>
+        </tr>
+        <tr>
+            <td>歌唱曲数</td>
+            <td>
+                <%= data.song %><a>曲</a>
+            </td>
+        </tr>
+        <tr>
+            <td>実装時期</td>
+            <td>
+                <%= data.period %>
+            </td>
+        </tr>
+        <tr>
+            <td>アイドル紹介</td>
+            <td>
+                <%= data.explanation %>
             </td>
         </tr>
     </table>
-    <a href="/keiyo2/edit/<%= id %>">編集</a>
-    <a href="/keiyo2">駅一覧に戻る</a>
+    <a href="/idol/edit/<%= id %>">編集</a>
+    <a href="/idol">アイドル名簿に戻る</a>
 </body>
 
 </html>
