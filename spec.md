@@ -5,9 +5,9 @@
 リスト+オブジェクト
 - id:（信号機以外50音順）数値：
 - name：文字列：名前
+- age：数値：
 - size：数値：身長
 - weight：数値：体重
-- threesize：数値：スリーサイズ
 - song：数値：持ち曲数
 - period：文字：実装時期
 - explanation：文字列：キャラ説明

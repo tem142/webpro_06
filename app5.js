@@ -27,9 +27,9 @@ let station2 = [
 //////////////////////////////////
 
 let idol = [
-  { id: 1, name: "花海 咲季", age: 15, size: 152, weight: 45, three_size: { bust: 84, waist: 55, hip: 80 }, song: 4, period: "2024年5月16日", explanation: "勝ち気で負けず嫌いな元アスリート．妹の花海佑芽とは大の仲良しで，様々なスポーツで競い合ってきたライバル同士．佑芽の才能を誰より評価し，恐れている．" },
-  { id: 2, name: "月村 手毬", age: 15, size: 162, weight: 51, three_size: { bust: 82, waist: 58, hip: 86 }, song: 4, period: "2024年5月16日", explanation: "中等部ナンバーワンユニットの元メンバーであり，すでに一線級の歌唱力を持つ．クールでストイックかと思いきや，甘えん坊で怠け者なトラブルメイカーというような二面性のある少女．" },
-  { id: 3, name: "藤田 ことね", age: 15, size: 156, weight: 40, three_size: { bust: 75, waist: 55, hip: 75 }, song: 4, period: "2024年5月16日", explanation: "人生一発逆転の手段としてアイドルを目指している，可愛い顔には自信のある，がめつい女の子．なぜか過大評価してくる生徒会長・星南のことがちょっぴり苦手．" },
+  { id: 1, name: "花海 咲季", age: 15, size: 152, weight: 45,  song: 4, period: "2024年5月16日", explanation: "勝ち気で負けず嫌いな元アスリート．妹の花海佑芽とは大の仲良しで，様々なスポーツで競い合ってきたライバル同士．佑芽の才能を誰より評価し，恐れている．" },
+  { id: 2, name: "月村 手毬", age: 15, size: 162, weight: 51,  song: 4, period: "2024年5月16日", explanation: "中等部ナンバーワンユニットの元メンバーであり，すでに一線級の歌唱力を持つ．クールでストイックかと思いきや，甘えん坊で怠け者なトラブルメイカーというような二面性のある少女．" },
+  { id: 3, name: "藤田 ことね", age: 15, size: 156, weight: 40,  song: 4, period: "2024年5月16日", explanation: "人生一発逆転の手段としてアイドルを目指している，可愛い顔には自信のある，がめつい女の子．なぜか過大評価してくる生徒会長・星南のことがちょっぴり苦手．" },
 ];
 
 // 一覧
@@ -39,8 +39,8 @@ app.get("/idol", (req, res) => {
 });
 
 // Create
-app.get("/keiyo2/create", (req, res) => {
-  res.redirect('/public/keiyo2_new.html');
+app.get("/idol/create", (req, res) => {
+  res.redirect('/public/idol_new.html');
 });
 
 // 詳細
@@ -96,9 +96,8 @@ app.get("/keiyo2/:number", (req, res) => {
 
 // Delete confirmation
 app.get("/keiyo2/deletek/:number", (req, res) => {
-  const number = req.params.number;
-  const detail = station2[number];
-  res.render('keiyo2_delete', { id: number, data: detail});
+
+  res.render('keiyo2_delete', { id: req.params.number, data: station2[req.params.number] });
 });
 // Delete
 app.get("/keiyo2/delete/:number", (req, res) => {
