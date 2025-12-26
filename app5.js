@@ -24,6 +24,50 @@ let station2 = [
   { id: 7, code: "JE18", name: "蘇我駅", change: "内房線，外房線", passengers: 31328, distance: 43.0 },
 ];
 
+let idol = [
+  { id: 1, name: "花海 咲季", age: 15, size: 152, weight: 45, three_size: { bust: 84, waist: 55, hip: 80 }, song: 4, period: "2024年5月16日", explanation: "勝ち気で負けず嫌いな元アスリート．妹の花海佑芽とは大の仲良しで，様々なスポーツで競い合ってきたライバル同士．佑芽の才能を誰より評価し，恐れている．" },
+  { id: 2, name: "月村 手毬", age: 15, size: 162, weight: 51, three_size: { bust: 82, waist: 58, hip: 86 }, song: 4, period: "2024年5月16日", explanation: "中等部ナンバーワンユニットの元メンバーであり，すでに一線級の歌唱力を持つ．クールでストイックかと思いきや，甘えん坊で怠け者なトラブルメイカーというような二面性のある少女．" },
+  { id: 3, name: "藤田 ことね", age: 15, size: 156, weight: 40, three_size: { bust: 75, waist: 55, hip: 75 }, song: 4, period: "2024年5月16日", explanation: "人生一発逆転の手段としてアイドルを目指している，可愛い顔には自信のある，がめつい女の子．なぜか過大評価してくる生徒会長・星南のことがちょっぴり苦手．" },
+];
+
+// 一覧
+app.get("/idol", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  res.render('idol', { data: idol });
+});
+// 詳細
+app.get("/idol/:id", (req, res) => {
+  const number = req.params.number;
+  const detail = idol[number];
+  res.render('idol_detail', { id: number, data: detail });
+});
+
+let song = [
+  { id: 1, code: "JE01", name: "東京駅", change: "総武本線，中央線，etc", passengers: 403831, distance: 0 },
+  { id: 2, code: "JE02", name: "八丁堀駅", change: "日比谷線", passengers: 31071, distance: 1.2 },
+  { id: 3, code: "JE05", name: "新木場駅", change: "有楽町線，りんかい線", passengers: 67206, distance: 7.4 },
+  { id: 4, code: "JE07", name: "舞浜駅", change: "舞浜リゾートライン", passengers: 76156, distance: 12.7 },
+  { id: 5, code: "JE12", name: "新習志野駅", change: "", passengers: 11655, distance: 28.3 },
+  { id: 6, code: "JE17", name: "千葉みなと駅", change: "千葉都市モノレール", passengers: 16602, distance: 39.0 },
+  { id: 7, code: "JE18", name: "蘇我駅", change: "内房線，外房線", passengers: 31328, distance: 43.0 },
+];
+
+let newmd = [
+  { id: 1, code: "JE01", name: "東京駅", change: "総武本線，中央線，etc", passengers: 403831, distance: 0 },
+  { id: 2, code: "JE02", name: "八丁堀駅", change: "日比谷線", passengers: 31071, distance: 1.2 },
+  { id: 3, code: "JE05", name: "新木場駅", change: "有楽町線，りんかい線", passengers: 67206, distance: 7.4 },
+  { id: 4, code: "JE07", name: "舞浜駅", change: "舞浜リゾートライン", passengers: 76156, distance: 12.7 },
+  { id: 5, code: "JE12", name: "新習志野駅", change: "", passengers: 11655, distance: 28.3 },
+  { id: 6, code: "JE17", name: "千葉みなと駅", change: "千葉都市モノレール", passengers: 16602, distance: 39.0 },
+  { id: 7, code: "JE18", name: "蘇我駅", change: "内房線，外房線", passengers: 31328, distance: 43.0 },
+];
+
+
+
+
+
+
+
 // 一覧
 app.get("/keiyo2", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
