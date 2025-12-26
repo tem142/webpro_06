@@ -24,6 +24,8 @@ let station2 = [
   { id: 7, code: "JE18", name: "蘇我駅", change: "内房線，外房線", passengers: 31328, distance: 43.0 },
 ];
 
+//////////////////////////////////
+
 let idol = [
   { id: 1, name: "花海 咲季", age: 15, size: 152, weight: 45, three_size: { bust: 84, waist: 55, hip: 80 }, song: 4, period: "2024年5月16日", explanation: "勝ち気で負けず嫌いな元アスリート．妹の花海佑芽とは大の仲良しで，様々なスポーツで競い合ってきたライバル同士．佑芽の才能を誰より評価し，恐れている．" },
   { id: 2, name: "月村 手毬", age: 15, size: 162, weight: 51, three_size: { bust: 82, waist: 58, hip: 86 }, song: 4, period: "2024年5月16日", explanation: "中等部ナンバーワンユニットの元メンバーであり，すでに一線級の歌唱力を持つ．クールでストイックかと思いきや，甘えん坊で怠け者なトラブルメイカーというような二面性のある少女．" },
@@ -35,6 +37,12 @@ app.get("/idol", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
   res.render('idol', { data: idol });
 });
+
+// Create
+app.get("/keiyo2/create", (req, res) => {
+  res.redirect('/public/keiyo2_new.html');
+});
+
 // 詳細
 app.get("/idol/:id", (req, res) => {
   const number = req.params.number;
@@ -65,7 +73,7 @@ let newmd = [
 
 
 
-
+/////////////////////////////////////////////
 
 
 // 一覧
@@ -73,10 +81,6 @@ app.get("/keiyo2", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
   res.render('keiyo2', { data: station2 });
 });
-//app.get("/keiyo2", (req, res) => {
-// 本来ならここにDBとのやり取りが入る
-//  res.render('db2', { data: station2 });
-//});
 
 // Create
 app.get("/keiyo2/create", (req, res) => {
@@ -89,6 +93,13 @@ app.get("/keiyo2/:number", (req, res) => {
   const detail = station2[number];
   res.render('keiyo2_detail', { id: number, data: detail });
 });
+
+// Delete confirmation
+app.get("/keiyo2/deletek/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = station2[number];
+  res.render('keiyo2_delete', { id: number, data: detail});
+});
 // Delete
 app.get("/keiyo2/delete/:number", (req, res) => {
   // 本来は削除の確認ページを表示する
@@ -97,6 +108,45 @@ app.get("/keiyo2/delete/:number", (req, res) => {
   station2.splice(req.params.number, 1);
   res.redirect('/keiyo2');
 });
+
+// Create
+app.post("/keiyo2", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const id = station2.length + 1;
+  const code = req.body.code;
+  const name = req.body.name;
+  const change = req.body.change;
+  const passengers = req.body.passengers;
+  const distance = req.body.distance;
+  station2.push({ id: id, code: code, name: name, change: change, passengers: passengers, distance: distance });
+  console.log(station2);
+  res.render('keiyo2', { data: station2 });
+});
+
+// Edit
+app.get("/keiyo2/edit/:number", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const number = req.params.number;
+  const detail = station2[number];
+  res.render('keiyo2_edit', { id: number, data: detail });
+});
+
+// Update
+app.post("/keiyo2/update/:number", (req, res) => {
+  // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
+  // 本来ならここにDBとのやり取りが入る
+  station2[req.params.number].code = req.body.code;
+  station2[req.params.number].name = req.body.name;
+  station2[req.params.number].change = req.body.change;
+  station2[req.params.number].passengers = req.body.passengers;
+  station2[req.params.number].distance = req.body.distance;
+  console.log(station2);
+  res.redirect('/keiyo2');
+});
+
+
+
+
 
 app.get("/keiyo", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
