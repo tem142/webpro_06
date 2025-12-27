@@ -31,25 +31,21 @@ let idol = [
   { id: 2, name: "月村 手毬", age: 15, size: 162, weight: 51,  song: 4, period: "2024年5月16日", explanation: "中等部ナンバーワンユニットの元メンバーであり，すでに一線級の歌唱力を持つ．クールでストイックかと思いきや，甘えん坊で怠け者なトラブルメイカーというような二面性のある少女．" },
   { id: 3, name: "藤田 ことね", age: 15, size: 156, weight: 40,  song: 4, period: "2024年5月16日", explanation: "人生一発逆転の手段としてアイドルを目指している，可愛い顔には自信のある，がめつい女の子．なぜか過大評価してくる生徒会長・星南のことがちょっぴり苦手．" },
 ];
-
 // 一覧
 app.get("/idol", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
   res.render('idol', { data: idol });
 });
-
 // Create
 app.get("/idol/create", (req, res) => {
   res.redirect('/public/idol_new.html');
 });
-
 // 詳細
 app.get("/idol/:number", (req, res) => {
   const number = req.params.number;
   const detail = idol[number];
   res.render('idol_detail', { id: number, data: detail });
 });
-
 // Delete confirmation
 app.get("/idol/deletek/:number", (req, res) => {
   const number = req.params.number;
@@ -64,7 +60,6 @@ app.get("/idol/delete/:number", (req, res) => {
   idol.splice(req.params.number, 1);
   res.redirect('/idol');
 });
-
 // Create
 app.post("/idol", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
@@ -80,7 +75,6 @@ app.post("/idol", (req, res) => {
   console.log(idol);
   res.render('idol', { data: idol });
 });
-
 // Edit
 app.get("/idol/edit/:number", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
@@ -88,7 +82,6 @@ app.get("/idol/edit/:number", (req, res) => {
   const detail = idol[number];
   res.render('idol_edit', { id: number, data: detail });
 });
-
 // Update
 app.post("/idol/update/:number", (req, res) => {
   // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
@@ -105,25 +98,148 @@ app.post("/idol/update/:number", (req, res) => {
 });
 
 let song = [
-  { id: 1, code: "JE01", name: "東京駅", change: "総武本線，中央線，etc", passengers: 403831, distance: 0 },
-  { id: 2, code: "JE02", name: "八丁堀駅", change: "日比谷線", passengers: 31071, distance: 1.2 },
-  { id: 3, code: "JE05", name: "新木場駅", change: "有楽町線，りんかい線", passengers: 67206, distance: 7.4 },
-  { id: 4, code: "JE07", name: "舞浜駅", change: "舞浜リゾートライン", passengers: 76156, distance: 12.7 },
-  { id: 5, code: "JE12", name: "新習志野駅", change: "", passengers: 11655, distance: 28.3 },
-  { id: 6, code: "JE17", name: "千葉みなと駅", change: "千葉都市モノレール", passengers: 16602, distance: 39.0 },
-  { id: 7, code: "JE18", name: "蘇我駅", change: "内房線，外房線", passengers: 31328, distance: 43.0 },
+  { id: 1, name: "【初星フェス】「Campus mode!!」燕ガシャ", caraname: "雨夜 燕", period: "2025/12/26-2026/1/5", level: 5, songname: "Campus mode!!"},
+  { id: 2, name: "Story of Re;IRIS放映記念SSR1.5倍セレクトピックアップガシャ", caraname: "Re;IRIS & Begrazia", period: "2025/12/26-2026/1/5", level: 3, songname: "雨上がりのアイリス & Star-mine" },
+  { id: 3, name: "【step3解禁】「自己肯定感爆上げ↑↑しゅきしゅきソング」ことねガシャ", caraname: "藤田 ことね", period: "2025/12/18-2025/12/26", level: 4, songname: "自己肯定感爆上げ↑↑しゅきしゅきソング"},
+  { id: 4, name: "【step3解禁】「36℃ U･B･U」莉波ガシャ", caraname: "姫崎 莉波", period: "2025/12/18-2025/12/26", level: 4, songname: "36℃ U･B･U"},
+  { id: 5, name: "【恒常】「グースーピー」佑芽ガシャ", caraname: "花海 佑芽", period: "2025/11/28-2025/12/08", level: 3, songname: "グースーピー"},
+  { id: 6, name: "【恒常】「理論武装して」燕ガシャ", caraname: "雨夜 燕", period: "2025/11/16-2025/11/28", level: 2, songname: "理論武装して"},
+  { id: 7, name: "【ライブツアー】「がむしゃらに行こう！」手毬ガシャ", caraname: "月村 手毬", period: "2025/10/10-2025/10/21", level: 5, songname: "がむしゃらに行こう！"},
 ];
+// 一覧
+app.get("/song", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  res.render('song', { data: song });
+});
+// Create
+app.get("/song/create", (req, res) => {
+  res.redirect('/public/song_new.html');
+});
+// 詳細
+app.get("/song/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = song[number];
+  res.render('song_detail', { id: number, data: detail });
+});
+// Delete confirmation
+app.get("/song/deletek/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = song[number];
+  res.render('song_delete', { id: number, data: detail });
+});
+// Delete
+app.get("/song/delete/:number", (req, res) => {
+  // 本来は削除の確認ページを表示する
+  // 本来は削除する番号が存在するか厳重にチェックする
+  // 本来ならここにDBとのやり取りが入る
+  song.splice(req.params.number, 1);
+  res.redirect('/song');
+});
+// Create
+app.post("/song", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const id = song.length + 1;
+  const name = req.body.name;
+  const caraname = req.body.caraname;
+  const period = req.body.period;
+  const level = req.body.level;
+  const songname = req.body.songname;
+  song.push({ id: id, name: name, caraname: caraname, period: period, level: level, songname: songname });
+  console.log(song);
+  res.render('song', { data: song });
+});
+// Edit
+app.get("/song/edit/:number", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const number = req.params.number;
+  const detail = song[number];
+  res.render('song_edit', { id: number, data: detail });
+});
+// Update
+app.post("/song/update/:number", (req, res) => {
+  // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
+  // 本来ならここにDBとのやり取りが入る
+  song[req.params.number].name = req.body.name;
+  song[req.params.number].caraname = req.body.caraname;
+  song[req.params.number].period = req.body.period;
+  song[req.params.number].level = req.body.level;
+  song[req.params.number].songname = req.body.songname;
+  console.log(song);
+  const number = req.params.number;
+  res.redirect('/song/' + number);
+});
 
 let newmd = [
-  { id: 1, code: "JE01", name: "東京駅", change: "総武本線，中央線，etc", passengers: 403831, distance: 0 },
-  { id: 2, code: "JE02", name: "八丁堀駅", change: "日比谷線", passengers: 31071, distance: 1.2 },
-  { id: 3, code: "JE05", name: "新木場駅", change: "有楽町線，りんかい線", passengers: 67206, distance: 7.4 },
-  { id: 4, code: "JE07", name: "舞浜駅", change: "舞浜リゾートライン", passengers: 76156, distance: 12.7 },
-  { id: 5, code: "JE12", name: "新習志野駅", change: "", passengers: 11655, distance: 28.3 },
-  { id: 6, code: "JE17", name: "千葉みなと駅", change: "千葉都市モノレール", passengers: 16602, distance: 39.0 },
-  { id: 7, code: "JE18", name: "蘇我駅", change: "内房線，外房線", passengers: 31328, distance: 43.0 },
+  { id: 1, code: "DM24-EX4", name: "「異次元の超獣使い」", relese_data: "2025/3/15", price: 5940, explanation: "1パック8枚入り　1BOX 12パック入り/VTuber/バーチャルライバーグループ「にじさんじ」とデュエマがコラボレーションしたEXパックが新登場！" },
+  { id: 2, code: "DM25-RP2", name: "邪神vs邪神Ⅱ ～ジャシン・イン・ザ・シェル～", relese_data: "2025/6/21", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/新章王道W（ダブル）の基本となる拡張パック第2弾！" },
+  { id: 3, code: "DM25-EX1", name: "愛感謝祭 ヒロインBEST", relese_data: "2025/7/19", price: 5280, explanation: "1パック6枚入り　1BOX 16パック入り/ファンタジーBESTに続く、種族をフォーカスした「BEST」シリーズ第3弾！今回も新たに５種族をフィーチャー！テーマは「デュエマのヒロイン」！" },
+  { id: 4, code: "DM25-RP3", name: "邪神vs時皇 ～ビヨンド・ザ・タイム～", relese_data: "2025/9/20", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/王道Wの基本となる拡張パック第3弾！" },
+  { id: 5, code: "DM25-EX2", name: "王道vs邪道 デュエキングWDreaM 2025", relese_data: "2025/10/18", price: 5500, explanation: "1パック9枚入り　1BOX 10パック入り/豪華再録・強力新規カードで大好評の、デュエキングMAXパックの最新版！" },
+  { id: 6, code: "DM25-RP4", name: "終淵 ～LOVE＆ABYSS～", relese_data: "2025/12/20", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/王道Wの基本となる拡張パック第4弾！" },
+  { id: 7, code: "DM25-EX3", name: "邪神爆発デュエナマイトパック「王道W」", relese_data: "2026/1/17", price: 11880, explanation:"1パック10枚入り　1BOX 8パック入り/王道W拡張パック1弾～4弾からカードをセレクションしたフルホイルパック！" },
 ];
-
+// 一覧
+app.get("/md", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  res.render('md', { data: newmd });
+});
+// Create
+app.get("/md/create", (req, res) => {
+  res.redirect('/public/md_new.html');
+});
+// 詳細
+app.get("/md/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = newmd[number];
+  res.render('md_detail', { id: number, data: detail });
+});
+// Delete confirmation
+app.get("/md/deletek/:number", (req, res) => {
+  const number = req.params.number;
+  const detail = newmd[number];
+  res.render('md_delete', { id: number, data: detail });
+});
+// Delete
+app.get("/md/delete/:number", (req, res) => {
+  // 本来は削除の確認ページを表示する
+  // 本来は削除する番号が存在するか厳重にチェックする
+  // 本来ならここにDBとのやり取りが入る
+  newmd.splice(req.params.number, 1);
+  res.redirect('/md');
+});
+// Create
+app.post("/md", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const id = newmd.length + 1;
+  const code = req.body.code;
+  const name = req.body.name;
+  const release_date = req.body.release_date;
+  const price = req.body.price;
+  const explanation = req.body.explanation;
+  newmd.push({ id: id, code: code, name: name, release_date: release_date, price: price, explanation: explanation });
+  console.log(newmd);
+  res.render('md', { data: newmd });
+});
+// Edit
+app.get("/md/edit/:number", (req, res) => {
+  // 本来ならここにDBとのやり取りが入る
+  const number = req.params.number;
+  const detail = newmd[number];
+  res.render('md_edit', { id: number, data: detail });
+});
+// Update
+app.post("/md/update/:number", (req, res) => {
+  // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
+  // 本来ならここにDBとのやり取りが入る
+  newmd[req.params.number].name = req.body.name;
+  newmd[req.params.number].code = req.body.code;
+  newmd[req.params.number].release_date = req.body.release_date;
+  newmd[req.params.number].price = req.body.price;
+  newmd[req.params.number].explanation = req.body.explanation;
+  console.log(newmd);
+  const number = req.params.number;
+  res.redirect('/md' + number);
+});
 
 
 

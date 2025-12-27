@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>月村手毬</title>
+</head>
+
+<body>
+    <form action="/song" method="POST">
+        <a>例：【恒常】「アイヴイ」手毬ガシャ</a>
+        <input type="text" name="name" required>
+        <label for="name">name:</label><br>
+
+        <a>例：月村 手毬</a>
+        <input type="text" name="caraname">
+        <label for="change">caraname:</label><br>
+
+        <a>例：2024/05/22-2024/06/01</a>
+        <input type="text" name="period" required>
+        <label for="passengers">period:</label><br>
+
+        <a>例：4(1~5で5が最大の五段階評価)</a>
+        <input type="text" name="level" required>
+        <label for="distance">level:</label><br>
+
+        <a>例：アイヴイ</a>
+        <input type="text" name="songname" required>
+        <label for="distance">songname:</label><br>
+
+        <input type="submit" values="登録">
+        <input type="button" value="ピックアップガチャ一覧に戻る" onclick="location.href='/song'">
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,42 @@
+<!Doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>削除確認</title>
+</head>
+
+<body>
+    <h2>
+        <%= data.name %>の削除確認!!!!!!
+    </h2>
+    <table>
+        <tr>
+            <th>項目</th>
+            <th>データ</th>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>
+                <%= data.id %>
+            </td>
+        </tr>
+        <tr>
+            <td>商品コード</td>
+            <td>
+                <%= data.code %>
+            </td>
+        </tr>
+        <tr>
+            <td>商品名</td>
+            <td>
+                <%= data.name %>
+            </td>
+        </tr>
+    </table>
+    <h3>本当に削除しますか？</h3>
+    <button onclick="location.href='/dm/delete/<%= id %>'">削除</button>
+    <button onclick="location.href='/dm/<%= id %>'">商品詳細に戻る</button>
+</body>
+
+</html>

@@ -1,0 +1,36 @@
+<!Doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>月村手毬</title>
+</head>
+
+<body>
+    <h2>ピックアップガチャ一覧</h2>
+    <table>
+        <tr>
+            <th>ID</th>
+            <th>開催ガチャ一覧</th>
+            <th>開催期間</th>
+        </tr>
+        <% let number=0 %>
+            <% for( let row of data ) { %>
+                <tr>
+                    <td>
+                        <%= row.id %>
+                    </td>
+                    <td><a href="/song/<%= number %>">
+                        <%= row.name %>
+                    </a></td>
+                    <td>
+                        <%= row.period %>
+                    </td>
+                </tr>
+                <% number +=1 %>
+        <% } %>
+    </table>
+    <button onclick="location.href='/song/create'">新規ガチャ登録</button>
+</body>
+
+</html>

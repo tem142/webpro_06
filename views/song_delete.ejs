@@ -1,0 +1,36 @@
+<!Doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>月村手毬</title>
+</head>
+
+<body>
+    <h2>
+        開催ガチャ<%= data.name %>の削除確認!!!!!!
+    </h2>
+    <table>
+        <tr>
+            <th>項目</th>
+            <th>データ</th>
+        </tr>
+        <tr>
+            <td>ID</td>
+            <td>
+                <%= data.id %>
+            </td>
+        </tr>
+        <tr>
+            <td>名前</td>
+            <td>
+                <%= data.name %>
+            </td>
+        </tr>
+    </table>
+    <h3>本当に削除しますか？</h3>
+    <button onclick="location.href='/song/delete/<%= id %>'">本当に削除</button>
+    <button onclick="location.href='/song/<%= id %>'">ピックアップガチャ一覧に戻る</button>
+</body>
+
+</html>

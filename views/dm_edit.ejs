@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <title>
-        <%= data.name %>の情報編集
+        商品の情報編集
     </title>
 </head>
 
@@ -12,30 +12,30 @@
     <h2>
         <%= data.name %>の情報編集
     </h2>
-    <form action="/idol/update/<%= data.id - 1 %>" method="POST">
+    <form action="/dm/update/<%= data.id - 1 %>" method="POST">
         <table>
             <tr>
                 <th>項目</th>
                 <th>データ</th>
             </tr>
             <tr>
-                <td>名前</td>
+                <td>商品コード</td>
+                <td><input type="text" name="code" value="<%= data.code %>"></td>
+            </tr>
+            <tr>
+                <td>商品名</td>
                 <td><input type="text" name="name" value="<%= data.name %>"></td>
             </tr>
             <tr>
-                <td>年齢</td>
-                <td><input type="text" name="age" value="<%= data.age %>"></td>
+                <td>発売日</td>
+                <td><input type="text" name="release_date" value="<%= data.release_date %>"></td>
             </tr>
             <tr>
-                <td>身長</td>
-                <td><input type="text" name="size" value="<%= data.size %>"></td>
+                <td>1BOXの値段</td>
+                <td><input type="text" name="price" value="<%= data.price %>"></td>
             </tr>
             <tr>
-                <td>体重</td>
-                <td><input type="text" name="weight" value="<%= data.weight %>"></td>
-            </tr>
-            <tr>
-                <td>歌唱曲数</td>
+                <td>値段</td>
                 <td><input type="text" name="song" value="<%= data.song %>"></td>
             </tr>
             <tr>
@@ -49,7 +49,7 @@
         </table>
         <input type="submit" values="登録">
     </form>
-    <button onclick="location.href='/idol/<%= id %>'">アイドル詳細に戻る</button>
+    <button onclick="location.href='/dm/<%= id %>'">商品詳細に戻る</button>
 </body>
 
 </html>

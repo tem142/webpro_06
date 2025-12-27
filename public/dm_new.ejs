@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <title>DM</title>
+</head>
+
+<body>
+    <form action="/dm" method="POST">
+        <a>例：DM26-PR22</a>
+        <input type="text" name="code" required>
+        <label for="code">code:</label><br>
+
+        <a>例：終淵占拠 ～LOVE＆ABYSS＆DETH～</a>
+        <input type="text" name="name" required>
+        <label for="name">name:</label><br>
+
+        <a>例：2026/9/67</a>
+        <input type="text" name="release_date">
+        <label for="change">release_date:</label><br>
+
+        <a>例：price</a>
+        <input type="text" name="price" required>
+        <label for="passengers">price:</label><br>
+
+        <a>例：1パック4枚入り　1BOX50パック入り/すべてを過去にするデュエル・マスターズ最終弾</a>
+        <input type="text" name="explanation" required>
+        <label for="explanation">explanation:</label><br>
+
+        <input type="submit" values="登録">
+        <input type="button" value="商品一覧に戻る" onclick="location.href='/dm'">
+    </form>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+<!Doctype html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>
+        月村手毬
+    </title>
+</head>
+
+<body>
+    <h2>
+        <%= data.name %>の情報編集
+    </h2>
+    <form action="/song/update/<%= data.id - 1 %>" method="POST">
+        <table>
+            <tr>
+                <th>項目</th>
+                <th>データ</th>
+            </tr>
+            <tr>
+                <td>ガチャ名</td>
+                <td><input type="text" name="name" value="<%= data.name %>"></td>
+            </tr>
+            <tr>
+                <td>キャラ名</td>
+                <td><input type="text" name="caraname" value="<%= data.caraname %>"></td>
+            </tr>
+            <tr>
+                <td>開催期間</td>
+                <td><input type="text" name="period" value="<%= data.period %>"></td>
+            </tr>
+            <tr>
+                <td>評価度</td>
+                <td><input type="text" name="level" value="<%= data.level %>"></td>
+            </tr>
+            <tr>
+                <td>曲名</td>
+                <td><input type="text" name="songname" value="<%= data.songname %>"></td>
+            </tr>
+        </table>
+        <input type="submit" values="登録">
+    </form>
+    <button onclick="location.href='/song/<%= id %>'">ガチャ詳細に戻る</button>
+</body>
+
+</html>
