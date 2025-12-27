@@ -98,13 +98,21 @@ app.post("/idol/update/:id", (req, res) => {
 });
 
 let song = [
-  { id: 1, name: "【初星フェス】「Campus mode!!」燕ガシャ", caraname: "雨夜 燕", period: "2025/12/26-2026/1/5", level: 5, songname: "Campus mode!!" },
-  { id: 2, name: "Story of Re;IRIS放映記念SSR1.5倍セレクトピックアップガシャ", caraname: "Re;IRIS & Begrazia", period: "2025/12/26-2026/1/5", level: 3, songname: "雨上がりのアイリス & Star-mine" },
+  { id: 1, name: "【初星フェス】「Campus mode!!」燕ガシャ", caraname: "雨夜 燕", period: "2025/12/26-2026/01/05", level: 5, songname: "Campus mode!!" },
+  { id: 2, name: "Story of Re;IRIS放映記念SSR1.5倍セレクトピックアップガシャ", caraname: "Re;IRIS & Begrazia", period: "2025/12/26-2026/01/05", level: 3, songname: "雨上がりのアイリス & Star-mine" },
   { id: 3, name: "【step3解禁】「自己肯定感爆上げ↑↑しゅきしゅきソング」ことねガシャ", caraname: "藤田 ことね", period: "2025/12/18-2025/12/26", level: 4, songname: "自己肯定感爆上げ↑↑しゅきしゅきソング" },
   { id: 4, name: "【step3解禁】「36℃ U･B･U」莉波ガシャ", caraname: "姫崎 莉波", period: "2025/12/18-2025/12/26", level: 4, songname: "36℃ U･B･U" },
   { id: 5, name: "【恒常】「グースーピー」佑芽ガシャ", caraname: "花海 佑芽", period: "2025/11/28-2025/12/08", level: 3, songname: "グースーピー" },
   { id: 6, name: "【恒常】「理論武装して」燕ガシャ", caraname: "雨夜 燕", period: "2025/11/16-2025/11/28", level: 2, songname: "理論武装して" },
   { id: 7, name: "【ライブツアー】「がむしゃらに行こう！」手毬ガシャ", caraname: "月村 手毬", period: "2025/10/10-2025/10/21", level: 5, songname: "がむしゃらに行こう！" },
+  { id: 8, name: "【初星フェス】「Campus mode!!」美鈴ガシャ", caraname: "秦谷 美鈴", period: "2025/06/30-2025/07/07", level: 5, songname: "Campus mode!!" },
+  { id: 9, name: "【シーズン】「桜フォトグラフ」咲季ガシャ", caraname: "花海 咲季", period: "2025/04/11-2025/04/22", level: 4, songname: "桜フォトグラフ" },
+  { id: 10, name: "【恒常】「極光」リーリヤガシャ", caraname: "葛城 リーリヤ", period: "2025/03/21-2025/04/01", level: 3, songname: "夏色パレット" },
+  { id: 11, name: "【シーズン】「雪解けに」麻央ガシャ", caraname: "有村 麻央", period: "2025/03/10-2025/03/21", level: 4, songname: "雪解けに" },
+  { id: 12, name: "【シーズン】「ハッピーミルフィーユ」星南ガシャ", caraname: "十王 星南", period: "2025/02/14-2025/02/28", level: 5, songname: "ハッピーミルフィーユ" },
+  { id: 13, name: "【シーズン】「仮装狂騒曲」広ガシャ", caraname: "篠澤 広", period: "2024/10/08-2024/10/18", level: 3, songname: "仮装狂騒曲" },
+  { id: 14, name: "【恒常】「ようこそ初星温泉」千奈ガシャ", caraname: "倉本 千奈", period: "2024/09/11-2024/09/20", level: 4, songname: "ようこそ初星温泉" },
+  { id: 15, name: "【シーズン】「キミとセミブルー」清夏ガシャ", caraname: "紫雲 清夏", period: "2024/07/01-2024/07/12", level: 4, songname: "キミとセミブルー" },
 ];
 // 一覧
 app.get("/song", (req, res) => {
@@ -116,23 +124,23 @@ app.get("/song/create", (req, res) => {
   res.redirect('/public/song_new.html');
 });
 // 詳細
-app.get("/song/:number", (req, res) => {
-  const number = req.params.number;
-  const detail = song[number];
-  res.render('song_detail', { id: number, data: detail });
+app.get("/song/:id", (req, res) => {
+  const id = req.params.id;
+  const detail = song[id];
+  res.render('song_detail', { id: id, data: detail });
 });
 // Delete confirmation
-app.get("/song/deletek/:number", (req, res) => {
-  const number = req.params.number;
-  const detail = song[number];
-  res.render('song_delete', { id: number, data: detail });
+app.get("/song/deletek/:id", (req, res) => {
+  const id = req.params.id;
+  const detail = song[id];
+  res.render('song_delete', { id: id, data: detail });
 });
 // Delete
-app.get("/song/delete/:number", (req, res) => {
+app.get("/song/delete/:id", (req, res) => {
   // 本来は削除の確認ページを表示する
   // 本来は削除する番号が存在するか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
-  song.splice(req.params.number, 1);
+  song.splice(req.params.id, 1);
   res.redirect('/song');
 });
 // Create
@@ -149,24 +157,24 @@ app.post("/song", (req, res) => {
   res.render('song', { data: song });
 });
 // Edit
-app.get("/song/edit/:number", (req, res) => {
+app.get("/song/edit/:id", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  const number = req.params.number;
-  const detail = song[number];
-  res.render('song_edit', { id: number, data: detail });
+  const id = req.params.id;
+  const detail = song[id];
+  res.render('song_edit', { id: id, data: detail });
 });
 // Update
-app.post("/song/update/:number", (req, res) => {
+app.post("/song/update/:id", (req, res) => {
   // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
-  song[req.params.number].name = req.body.name;
-  song[req.params.number].caraname = req.body.caraname;
-  song[req.params.number].period = req.body.period;
-  song[req.params.number].level = req.body.level;
-  song[req.params.number].songname = req.body.songname;
+  song[req.params.id].name = req.body.name;
+  song[req.params.id].caraname = req.body.caraname;
+  song[req.params.id].period = req.body.period;
+  song[req.params.id].level = req.body.level;
+  song[req.params.id].songname = req.body.songname;
   console.log(song);
-  const number = req.params.number;
-  res.redirect('/song/' + number);
+  const id = req.params.id;
+  res.redirect('/song/' + id);
 });
 
 let newmd = [
