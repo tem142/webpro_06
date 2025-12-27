@@ -1,0 +1,189 @@
+:root {
+    --color-primary: #f29727;
+    --color-primary-strong: #e48418;
+    --color-accent: #4fae8d;
+    --color-bg: #fffaf4;
+    --color-card: #ffffff;
+    --color-border: #f1e4d2;
+    --color-text: #2d2a32;
+    --color-muted: #6e6a73;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    background: var(--color-bg);
+    color: var(--color-text);
+    margin: 0;
+    padding: 24px 16px 40px;
+}
+
+a {
+    color: var(--color-primary-strong);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.page {
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+.card,
+.main-card {
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 14px;
+    padding: 20px 22px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+}
+
+h1,
+h2,
+h3 {
+    margin: 0 0 14px;
+    color: var(--color-primary-strong);
+    letter-spacing: 0.04em;
+}
+
+.header-logo1 {
+    width: 800px;
+    height: 320px;
+    margin: 0 auto 20px;
+    background-image: url('/public/images/kunio.png');
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+.header-logo2 {
+    width: 800px;
+    height: 320px;
+    margin: 0 auto 20px;
+    background-image: url('/public/images/hatumi.png');
+    background-size: contain;
+    background-position: right;
+    background-repeat: no-repeat;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 12px 0 18px;
+    background: var(--color-card);
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+    overflow: hidden;
+}
+
+table th,
+table td {
+    padding: 10px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--color-border);
+}
+
+table th {
+    background: #fff3dc;
+    color: var(--color-text);
+    font-weight: 600;
+}
+
+table tr:last-child td {
+    border-bottom: none;
+}
+
+.actions,
+.button-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 12px;
+}
+
+.btn {
+    appearance: none;
+    border: 1px solid transparent;
+    padding: 10px 16px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color 120ms ease, color 120ms ease, border-color 120ms ease;
+}
+
+.btn-primary {
+    background: var(--color-primary);
+    border-color: var(--color-primary-strong);
+    color: #fff;
+}
+
+.btn-secondary {
+    background: var(--color-accent);
+    border-color: var(--color-accent);
+    color: #fff;
+}
+
+.btn-outline {
+    background: #fff;
+    border-color: var(--color-border);
+    color: var(--color-primary-strong);
+}
+
+.btn-danger {
+    background: #e05a47;
+    border-color: #d44a36;
+    color: #fff;
+}
+
+.btn:hover {
+    filter: brightness(1.03);
+}
+
+.btn:active {
+    filter: brightness(0.98);
+}
+
+.notice {
+    background: #fff7e6;
+    color: var(--color-text);
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+    padding: 10px 12px;
+    margin-top: 10px;
+}
+
+form {
+    margin: 0;
+}
+
+input[type="text"],
+input[type="number"],
+input[type="date"],
+textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--color-border);
+    border-radius: 8px;
+    font-size: 14px;
+    background: #fff;
+    color: var(--color-text);
+}
+
+textarea {
+    min-height: 96px;
+}
+
+label {
+    display: block;
+    margin-top: 8px;
+    margin-bottom: 4px;
+    color: var(--color-muted);
+    font-size: 13px;
+}

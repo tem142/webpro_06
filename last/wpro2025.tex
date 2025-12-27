@@ -1,0 +1,465 @@
+\documentclass[uplatex]{jsarticle}
+\usepackage{amsmath}
+\usepackage[dvipdfmx]{graphicx}
+\setcounter{tocdepth}{3}
+\usepackage{float}
+\usepackage{moreverb}
+\usepackage{lscape}
+% \usepackage{stix2} % ← フォントパッケージが未導入の場合エラーになるため、一旦コメントアウト
+\usepackage[fleqn,tbtags]{mathtools}
+\usepackage[dvipdfmx]{hyperref} % ← ドライバを明示的に指定
+\usepackage{url}
+
+\begin{document}
+\title{WPRO2025 最終レポート}
+\author{25GXXXX 氏名}
+\date{}
+\maketitle
+
+
+\section{はじめに}
+ホームページについての仕様書を利用者向け，管理者向け，
+開発者向けに分けて記載する．
+
+
+\section{開発者向け仕様書}
+\subsection{初星学園在学アイドル管理，表示システム}
+\subsubsection{概要}
+本仕様書は，類似システムの開発者向けに仕様を記述する．
+初星学園在学アイドル管理，表示システムは，初星学園に在学する
+アイドルの情報を管理し，表示するためのシステムである．
+具体的には，アイドルの情報の一覧表示，
+詳細表示，追加，削除，編集，更新の機能を有している．
+
+\subsubsection{データ構造}
+アイドル情報は，メモリ配列で管理される．
+各要素の構造は以下の通りである．
+\begin{table}[H]
+\centering
+\caption{メモリ配列の各要素の構造}
+\begin{tabular}{lll}
+\hline
+\textbf{フィールド} & \textbf{型} & \textbf{説明} \\\hline
+id & number & 識別子 \\
+name & string & アイドルの名前 \\
+age & number & 年齢 \\
+size & number & 身長(cm) \\
+weight & number & 体重(kg) \\
+song & number & 持ち曲数 \\
+period & string & 実装時期 \\
+explanation & string & 紹介文 \\
+\hline
+\end{tabular}
+\label{idol_date}
+\end{table}
+
+\subsubsection{HTTPメソッドとリソース名}
+リソース名は 'idol'．現実装では URL パラメータ ':id' を\textbf{配列インデックス(0始まり)}として扱う．以下にエンドポイント一覧を示す．
+
+\begin{table}[H]
+\centering
+\begin{tabular}{l l l p{60mm}}
+\hline
+    extbf{Method} & \textbf{Path} & \textbf{View/返却} & \textbf{目的/備考} \\
+\hline
+GET & /idol & render: \texttt{idol} & 名簿一覧表示（\url{./views/idol.ejs}）\\
+GET & /idol/create & redirect: /public/idol\_new.html & 追加フォームへ遷移（静的HTML）\\
+GET & /idol/:id & render: \texttt{idol\_detail} & 詳細表示．\texttt{id} は配列インデックス\\
+GET & /idol/deletek/:id & render: \texttt{idol\_delete} & 削除確認画面\\
+GET & /idol/delete/:id & redirect: /idol & 指定インデックス1件削除後，一覧へ\\
+POST & /idol & render: \texttt{idol} & 新規追加後，一覧表示\\
+GET & /idol/edit/:id & render: \texttt{idol\_edit} & 編集フォーム表示\\
+POST & /idol/update/:id & redirect: '/idol/' + id & 更新後，詳細へ戻す\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{ページ遷移}
+
+システムのページ遷移のマーメイド図\ref{page_transition}は以下の通りである．
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{wpro2025_.pdf}
+\caption{ページ遷移図}
+\label{page_transition}
+\end{figure}
+主要な遷移は以下の通りである．
+\begin{itemize}
+    \item 一覧から各行のアイドル名に埋められたリンクで詳細へ（'/idol/:id'）．
+    \item 追加フォームは '/idol/create' から '/public/idol\_new.html' にリダイレクト．
+    \item 削除は確認画面（'/idol/deletek/:id'）を経て，'/idol/delete/:id' 実行後一覧へ．
+    \item 編集は '/idol/edit/:id' から更新 'POST /idol/update/:id'．現実装は更新後は再度詳細へ移動．
+\end{itemize}
+
+\subsubsection{操作の詳細}
+
+\paragraph{1. 一覧 (GET /idol)}
+'idol' 配列を EJS でテーブル表示．リンクは配列インデックスを用いる．
+
+\paragraph{2. 詳細 (GET /idol/:id)}
+'idol[id]' を取得し，項目を表示．編集・削除確認へのボタンを提供．
+
+\paragraph{3. 追加 (GET /idol/create, POST /idol)}
+静的フォームから 'name, age, size, weight, song, period, explanation' を受け取り配列へ追加．\textbf{ID} は \textbf{最大ID+1} で採番することを推奨．
+
+\paragraph{4. 削除確認/削除 (GET /idol/deletek/:id, GET /idol/delete/:id)}
+確認画面で対象を表示し，削除リンク実行で 'idol.splice(id, 1)'．一覧へ戻る．
+
+\paragraph{5. 編集/更新 (GET /idol/edit/:id, POST /idol/update/:id)}
+編集フォームに初期値をセットし，更新実行．現実装は一覧へ戻る．詳細へ戻したい場合は \verb|res.redirect(`/idol/${id}`)| に変更する．
+\subsubsection{追加・削除・編集後に表示する内容}
+\begin{itemize}
+    \item 追加後: 一覧（'render(idol)'）．
+    \item 削除後: 一覧（'redirect(/idol)'）．
+    \item 編集後: 詳細（'redirect('/idol/' + id)'）．
+\end{itemize}
+
+
+\subsection{学園アイドルマスターピックアップガチャ一覧システム}
+\subsubsection{概要}
+本仕様書は，類似システムの開発者向けに仕様を記述する．
+学園アイドルマスターピックアップガチャ一覧システムは，
+初星学園に在学するアイドルのピックアップガチャ情報を管理し，
+表示するためのシステムである．
+具体的には，ピックアップガチャの情報の一覧表示，
+詳細表示，追加，削除，編集，更新の機能を有している．
+
+\subsubsection{データ構造}
+ピックアップガチャ情報は，メモリ配列で管理される．
+各要素の構造は以下の通りである．
+\begin{table}[H]
+\centering
+\caption{メモリ配列の各要素の構造}
+\begin{tabular}{lll}
+\hline
+\textbf{フィールド} & \textbf{型} & \textbf{説明} \\\hline
+id & number & 識別子 \\
+name & string & ガチャ名 \\
+caraname & string & ガチャキャラ名 \\
+period & string & 実装期間 \\
+level & number & ガチャレベル \\
+songname & string & 曲名 \\
+\hline
+\end{tabular}
+\label{gacha_data}
+\end{table}
+
+\subsubsection{HTTPメソッドとリソース名}
+リソース名は 'song'．現実装では URL パラメータ ':id' を\textbf{配列インデックス(0始まり)}として扱う．以下にエンドポイント一覧を示す．
+\begin{table}[H]
+\centering
+\begin{tabular}{l l l p{60mm}}
+\hline
+    \textbf{Method} & \textbf{Path} & \textbf{View/返却} & \textbf{目的/備考} \\
+\hline
+GET & /song & render: \texttt{song} & ガチャ一覧表示（\url{./views/song.ejs}）\\
+GET & /song/create & redirect: /public/song\_new.html & 追加フォームへ遷移（静的HTML）\\
+GET & /song/:id & render: \texttt{song\_detail} & 詳細表示．\texttt{id} は配列インデックス\\
+GET & /song/deletek/:id & render: \texttt{song\_delete} & 削除確認画面\\
+GET & /song/delete/:id & redirect: /song & 指定インデックス1件削除後，一覧へ\\
+POST & /song & render: \texttt{song} & 新規追加後，一覧表示\\
+GET & /song/edit/:id & render: \texttt{song\_edit} & 編集フォーム表示\\
+POST & /song/update/:id & redirect: '/song/' + id & 更新後，詳細へ戻す\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{ページ遷移}
+システムのページ遷移のマーメイド図\ref{page_transition_gacha}は以下の通りである．
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{wpro2025_2.pdf}
+\caption{ページ遷移図}
+\label{page_transition_gacha}
+\end{figure}
+主要な遷移は以下の通りである．
+\begin{itemize}
+    \item 一覧から各行のガチャ名に埋められたリンクで詳細へ（'/song/:id'）．
+    \item 追加フォームは '/song/create' から '/public/song\_new.html' にリダイレクト．
+    \item 削除は確認画面（'/song/deletek/:id'）を経て，'/song/delete/:id' 実行後一覧へ．
+    \item 編集は '/song/edit/:id' から更新 'POST /song/update/:id'．現実装は更新後は再度詳細へ移動．
+\end{itemize}
+
+\subsubsection{操作の詳細}
+\paragraph{1. 一覧 (GET /song)}
+'song' 配列を EJS でテーブル表示．リンクは配列インデックスを用いる．
+\paragraph{2. 詳細 (GET /song/:id)}
+'song[id]' を取得し，項目を表示．編集・削除確認へのボタンを提供．
+\paragraph{3. 追加 (GET /song/create, POST /song)}
+静的フォームから 'name, caraname, period, level, songname' を受け取り配列へ追加．\textbf{ID} は \textbf{最大ID+1} で採番することを推奨．
+\paragraph{4. 削除確認/削除 (GET /song/deletek/:id, GET /song/delete/:id)}
+確認画面で対象を表示し，削除リンク実行で 'song.splice(id, 1)'．一覧へ戻る．
+\paragraph{5. 編集/更新 (GET /song/edit/:id, POST /song/update/:id)}
+編集フォームに初期値をセットし，更新実行．現実装は一覧へ戻る．詳細へ戻したい場合は \verb|res.redirect(`/song/${id}`)| に変更する．
+\subsubsection{追加・削除・編集後に表示する内容}
+\begin{itemize}
+    \item 追加後: 一覧（'render(song)'）．
+    \item 削除後: 一覧（'redirect(/song)'）．
+    \item 編集後: 詳細（'redirect('/song/' + id)'）．
+\end{itemize}
+
+
+\subsection{DMTCG商品情報管理システム}
+\subsubsection{概要}
+本仕様書は，類似システムの開発者向けに仕様を記述する．
+DMTCG商品情報管理システムは，DMTCGの商品情報を管理し，
+表示するためのシステムである．
+具体的には，商品の情報の一覧表示，詳細表示，追加，削除，
+編集，更新の機能を有している．
+
+\subsubsection{データ構造}
+商品情報は，メモリ配列で管理される．
+各要素の構造は以下の通りである．
+\begin{table}[H]
+\centering
+\caption{メモリ配列の各要素の構造}
+\begin{tabular}{lll}
+\hline
+\textbf{フィールド} & \textbf{型} & \textbf{説明} \\\hline
+id & number & 識別子 \\
+code & string & 商品コード \\
+name & string & 商品名 \\
+release_date & string & 発売日 \\
+price & number & 価格(円) \\
+explanation & string & 商品説明説明 \\
+\hline
+\end{tabular}
+\label{product_data}
+\end{table}
+
+\subsubsection{HTTPメソッドとリソース名}
+リソース名は 'dm'．現実装では URL パラメータ ':id' を\textbf{配列インデックス(0始まり)}として扱う．以下にエンドポイント一覧を示す．
+\begin{table}[H]
+\centering
+\begin{tabular}{l l l p{60mm}}
+\hline
+    \textbf{Method} & \textbf{Path} & \textbf{View/返却} & \textbf{目的/備考} \\
+\hline
+GET & /dm & render: \texttt{dm} & 商品一覧表示（\url{./views/dm.ejs}）\\
+GET & /dm/create & redirect: /public/dm\_new.html & 追加フォームへ遷移（静的HTML）\\
+GET & /dm/:id & render: \texttt{dm\_detail} & 詳細表示．\texttt{id} は配列インデックス\\
+GET & /dm/deletek/:id & render: \texttt{dm\_delete} & 削除確認画面\\
+GET & /dm/delete/:id & redirect: /dm & 指定インデックス1件削除後，一覧へ\\
+POST & /dm & render: \texttt{dm} & 新規追加後，一覧表示\\
+GET & /dm/edit/:id & render: \texttt{dm\_edit} & 編集フォーム表示\\
+POST & /dm/update/:id & redirect: '/dm/' + id & 更新後，詳細へ戻す\\
+\hline
+\end{tabular}
+\end{table}
+
+\subsubsection{ページ遷移}
+システムのページ遷移のマーメイド図\ref{page_transition_dm}は以下の通りである．
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.8\textwidth]{wpro2025_3.pdf}
+\caption{ページ遷移図}
+\label{page_transition_dm}
+\end{figure}
+主要な遷移は以下の通りである．
+\begin{itemize}
+    \item 一覧から各行の商品名に埋められたリンクで詳細へ（'/dm/:id'）．
+    \item 追加フォームは '/dm/create' から '/public/dm\_new.html' にリダイレクト．
+    \item 削除は確認画面（'/dm/deletek/:id'）を経て，'/dm/delete/:id' 実行後一覧へ．
+    \item 編集は '/dm/edit/:id' から更新 'POST /dm/update/:id'．現実装は更新後は再度詳細へ移動．
+\end{itemize}
+
+\subsubsection{操作の詳細}
+\paragraph{1. 一覧 (GET /dm)}
+'dm' 配列を EJS でテーブル表示．リンクは配列インデックスを用いる．
+
+\paragraph{2. 詳細 (GET /dm/:id)}
+'dm[id]' を取得し，項目を表示．編集・削除確認へのボタンを提供．
+
+\paragraph{3. 追加 (GET /dm/create, POST /dm)}
+静的フォームから 'code, name, release_date, price, explanation' を受け取り配列へ追加．\textbf{ID} は \textbf{最大ID+1} で採番することを推奨．
+
+\paragraph{4. 削除確認/削除 (GET /dm/deletek/:id, GET /dm/delete/:id)}
+確認画面で対象を表示し，削除リンク実行で 'dm.splice(id, 1)'．一覧へ戻る．
+
+\paragraph{5. 編集/更新 (GET /dm/edit/:id, POST /dm/update/:id)}
+編集フォームに初期値をセットし，更新実行．現実装は詳細へ戻る．
+
+\subsubsection{追加・削除・編集後に表示する内容}
+\begin{itemize}
+    \item 追加後: 一覧（'render(dm)'）．
+    \item 削除後: 一覧（'redirect(/dm)'）．
+    \item 編集後: 詳細（'redirect('/dm/' + id)'）．
+\end{itemize}
+
+
+
+\section{利用者向け仕様書}
+\subsection{このシステムについて}
+本システムは，初星学園に在学するアイドルの情報を管理するためのシステムです．
+Webブラウザ（Chrome，Safari，Edgeなど）から簡単に利用できます．
+
+\subsubsection{できること}
+このシステムでは，以下のことができます：
+\begin{itemize}
+    \item アイドルの一覧を見る
+    \item アイドルの詳しい情報を見る
+    \item 新しいアイドルを登録する
+    \item アイドルの情報を修正する
+    \item アイドルの情報を削除する
+\end{itemize}
+
+\subsection{システムの使い方}
+
+\subsubsection{アイドル一覧を見る}
+
+システムを開くと，最初に「初星学園在学アイドル名簿」という画面が表示されます．
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.8\textwidth]{images/idol_list.png}
+\fbox{\parbox{0.8\textwidth}{
+\centering
+【ここにアイドル一覧画面のスクリーンショットを配置】\\
+画像ファイル名: idol\_list.png
+}}
+\caption{アイドル一覧画面}
+\label{fig:idol_list}
+\end{figure}
+
+この画面では，以下の情報が表示されます：
+\begin{itemize}
+    \item ID番号：各アイドルに割り当てられた番号
+    \item 名前：アイドルの名前（クリックすると詳細が見られます）
+\end{itemize}
+
+新しいアイドルを登録したい場合は，画面下部にある「新入生登録」ボタンをクリックしてください．
+
+\subsubsection{アイドルの詳しい情報を見る}
+
+一覧画面でアイドルの名前をクリックすると，そのアイドルの詳しい情報が表示されます．
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.8\textwidth]{images/idol_detail.png}
+\fbox{\parbox{0.8\textwidth}{
+\centering
+【ここにアイドル詳細画面のスクリーンショットを配置】\\
+画像ファイル名: idol\_detail.png
+}}
+\caption{アイドル詳細画面}
+\label{fig:idol_detail}
+\end{figure}
+
+詳細画面では，以下の情報が確認できます：
+\begin{itemize}
+    \item ID：識別番号
+    \item 名前：アイドルの名前
+    \item 年齢：現在の年齢
+    \item 身長：身長（cm）
+    \item 体重：体重（kg）
+    \item 歌唱曲数：持ち歌の数
+    \item 実装時期：システムに登録された日
+    \item アイドル紹介：そのアイドルの特徴や説明
+\end{itemize}
+
+画面下部には以下のボタンがあります：
+\begin{itemize}
+    \item \textbf{編集}ボタン：情報を修正したいときに押します
+    \item \textbf{削除}ボタン：アイドルの情報を削除したいときに押します
+    \item \textbf{アイドル名簿に戻る}ボタン：一覧画面に戻ります
+\end{itemize}
+
+\subsubsection{新しいアイドルを登録する}
+
+一覧画面で「新入生登録」ボタンをクリックすると，登録フォームが表示されます．
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.8\textwidth]{images/idol_new.png}
+\fbox{\parbox{0.8\textwidth}{
+\centering
+【ここに新規登録画面のスクリーンショットを配置】\\
+画像ファイル名: idol\_new.png
+}}
+\caption{新入生登録画面}
+\label{fig:idol_new}
+\end{figure}
+
+\paragraph{入力手順}
+\begin{enumerate}
+    \item \textbf{名前}：アイドルの名前を入力します（例：初星 学園）
+    \item \textbf{年齢}：年齢を数字で入力します（例：15）
+    \item \textbf{身長 (cm)}：身長を数字で入力します（例：165）
+    \item \textbf{体重 (kg)}：体重を数字で入力します（例：55）
+    \item \textbf{歌唱曲数}：持ち歌の数を入力します（例：4）
+    \item \textbf{実装時期}：登録日を入力します（例：2024年5月16日）
+    \item \textbf{アイドル詳細}：そのアイドルの紹介文を入力します
+    \item すべて入力したら，\textbf{登録}ボタンをクリックします
+    \item 間違えた場合は，\textbf{アイドル名簿に戻る}ボタンで戻れます
+\end{enumerate}
+
+登録が完了すると，自動的に一覧画面に戻り，新しいアイドルが追加されています．
+
+\subsubsection{アイドルの情報を修正する}
+
+詳細画面で「編集」ボタンをクリックすると，情報を修正する画面が表示されます．
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.8\textwidth]{images/idol_edit.png}
+\fbox{\parbox{0.8\textwidth}{
+\centering
+【ここに編集画面のスクリーンショットを配置】\\
+画像ファイル名: idol\_edit.png
+}}
+\caption{情報編集画面}
+\label{fig:idol_edit}
+\end{figure}
+
+\paragraph{修正手順}
+\begin{enumerate}
+    \item 各項目には現在の情報が表示されています
+    \item 変更したい項目の内容を書き換えます
+    \item すべての修正が終わったら，\textbf{登録}ボタンをクリックします
+    \item 修正をやめたい場合は，\textbf{アイドル詳細に戻る}ボタンをクリックします
+\end{enumerate}
+
+修正が完了すると，詳細画面に戻り，変更した内容が反映されています．
+
+\subsubsection{アイドルの情報を削除する}
+
+詳細画面で「削除」ボタンをクリックすると，確認画面が表示されます．
+
+\begin{figure}[H]
+\centering
+% \includegraphics[width=0.8\textwidth]{images/idol_delete.png}
+\fbox{\parbox{0.8\textwidth}{
+\centering
+【ここに削除確認画面のスクリーンショットを配置】\\
+画像ファイル名: idol\_delete.png
+}}
+\caption{削除確認画面}
+\label{fig:idol_delete}
+\end{figure}
+
+\paragraph{削除手順}
+\begin{enumerate}
+    \item 削除したいアイドルの情報が表示されます
+    \item 「本当に卒業しましたか？」というメッセージが表示されます
+    \item 本当に削除してよい場合は，\textbf{削除}ボタンをクリックします
+    \item 間違えた場合は，\textbf{アイドル詳細に戻る}ボタンをクリックします
+\end{enumerate}
+
+\textbf{注意：} 削除した情報は元に戻せません．よく確認してから削除してください．
+
+
+
+\section{管理者向け仕様書}
+\subsection{概要}
+管理者は，システムの運用と保守を担当する．
+管理者は，XXXXを行うことができる．
+\subsection{機能一覧}
+\begin{itemize}
+    \item 機能A: ユーザー管理
+    \item 機能B: コンテンツ更新
+    \item 機能C: システム監視
+\end{itemize}
+
+
+
+\end{document}

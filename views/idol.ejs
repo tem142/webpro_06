@@ -3,30 +3,38 @@
 
 <head>
     <meta charset="utf-8">
-    <title>idol.ejs</title>
+    <title>アイドル名簿</title>
+    <link rel="stylesheet" href="/public/idol.css">
 </head>
 
 <body>
-    <h2>初星学園在学アイドル名簿</h2>
-    <table>
-        <tr>
-            <th>ID</th>
-            <th>名簿</th>
-        </tr>
-        <% let number=0 %>
-            <% for( let row of data ) { %>
+    <div class="page">
+        <div class="card">
+            <div class="header-logo1"></div>
+            <h2>初星学園在学アイドル名簿</h2>
+            <table>
                 <tr>
-                    <td>
-                        <%= row.id %>
-                    </td>
-                    <td><a href="/idol/<%= number %>">
-                            <%= row.name %>
-                        </a></td>
+                    <th>ID</th>
+                    <th>名簿</th>
                 </tr>
-                <% number +=1 %>
-                    <% } %>
-    </table>
-    <button onclick="location.href='/idol/create'">新入生登録</button>
+                <% let number=0 %>
+                    <% for( let row of data ) { %>
+                        <tr>
+                            <td>
+                                <%= row.id %>
+                            </td>
+                            <td><a href="/idol/<%= number %>">
+                                    <%= row.name %>
+                                </a></td>
+                        </tr>
+                        <% number +=1 %>
+                            <% } %>
+            </table>
+            <div class="actions">
+                <button class="btn btn-primary" onclick="location.href='/idol/create'">新入生登録</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

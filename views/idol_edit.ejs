@@ -3,53 +3,56 @@
 
 <head>
     <meta charset="utf-8">
-    <title>
-        <%= data.name %>の情報編集
-    </title>
+    <title><%= data.name %>の情報編集</title>
+    <link rel="stylesheet" href="/public/idol.css">
 </head>
 
 <body>
-    <h2>
-        <%= data.name %>の情報編集
-    </h2>
-    <form action="/idol/update/<%= id %>" method="POST">
-        <table>
-            <tr>
-                <th>項目</th>
-                <th>データ</th>
-            </tr>
-            <tr>
-                <td>名前</td>
-                <td><input type="text" name="name" value="<%= data.name %>"></td>
-            </tr>
-            <tr>
-                <td>年齢</td>
-                <td><input type="text" name="age" value="<%= data.age %>"></td>
-            </tr>
-            <tr>
-                <td>身長</td>
-                <td><input type="text" name="size" value="<%= data.size %>"></td>
-            </tr>
-            <tr>
-                <td>体重</td>
-                <td><input type="text" name="weight" value="<%= data.weight %>"></td>
-            </tr>
-            <tr>
-                <td>歌唱曲数</td>
-                <td><input type="text" name="song" value="<%= data.song %>"></td>
-            </tr>
-            <tr>
-                <td>実装時期</td>
-                <td><input type="text" name="period" value="<%= data.period %>"></td>
-            </tr>
-            <tr>
-                <td>アイドル詳細</td>
-                <td><input type="text" name="explanation" value="<%= data.explanation %>"></td>
-            </tr>
-        </table>
-        <input type="submit" values="登録">
-    </form>
-    <button onclick="location.href='/idol/<%= id %>'">アイドル詳細に戻る</button>
+    <div class="page">
+        <div class="card">
+            <h2><%= data.name %>の情報編集</h2>
+            <form action="/idol/update/<%= id %>" method="POST">
+                <table>
+                    <tr>
+                        <th>項目</th>
+                        <th>データ</th>
+                    </tr>
+                    <tr>
+                        <td>名前</td>
+                        <td><input type="text" name="name" value="<%= data.name %>"></td>
+                    </tr>
+                    <tr>
+                        <td>年齢</td>
+                        <td><input type="number" name="age" value="<%= data.age %>"></td>
+                    </tr>
+                    <tr>
+                        <td>身長</td>
+                        <td><input type="number" name="size" value="<%= data.size %>"></td>
+                    </tr>
+                    <tr>
+                        <td>体重</td>
+                        <td><input type="number" name="weight" value="<%= data.weight %>"></td>
+                    </tr>
+                    <tr>
+                        <td>歌唱曲数</td>
+                        <td><input type="number" name="song" value="<%= data.song %>"></td>
+                    </tr>
+                    <tr>
+                        <td>実装時期</td>
+                        <td><input type="text" name="period" value="<%= data.period %>"></td>
+                    </tr>
+                    <tr>
+                        <td>アイドル詳細</td>
+                        <td><textarea name="explanation"><%= data.explanation %></textarea></td>
+                    </tr>
+                </table>
+                <div class="actions">
+                    <button class="btn btn-primary" type="submit">登録</button>
+                    <button class="btn btn-outline" type="button" onclick="location.href='/idol/<%= id %>'">アイドル詳細に戻る</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>

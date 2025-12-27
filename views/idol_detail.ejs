@@ -3,72 +3,59 @@
 
 <head>
     <meta charset="utf-8">
-    <title>
-        <%= data.name %>
-    </title>
+    <title><%= data.name %></title>
+    <link rel="stylesheet" href="/public/idol.css">
 </head>
 
 <body>
-    <h2>
-        <%= data.name %>の詳細
-    </h2>
-    <table>
-        <tr>
-            <th>項目</th>
-            <th>データ</th>
-        </tr>
-        <tr>
-            <td>ID</td>
-            <td>
-                <%= data.id %>
-            </td>
-        </tr>
-        <tr>
-            <td>名前</td>
-            <td>
-                <%= data.name %>
-            </td>
-        </tr>
-        <tr>
-            <td>年齢</td>
-            <td>
-                <%= data.age %><a>歳</a>
-            </td>
-        </tr>
-        <tr>
-            <td>身長</td>
-            <td>
-                <%= data.size %><a>cm</a>
-            </td>
-        </tr>
-        <tr>
-            <td>体重</td>
-            <td>
-                <%= data.weight %><a>kg</a>
-            </td>
-        </tr>
-        <tr>
-            <td>歌唱曲数</td>
-            <td>
-                <%= data.song %><a>曲</a>
-            </td>
-        </tr>
-        <tr>
-            <td>実装時期</td>
-            <td>
-                <%= data.period %>
-            </td>
-        </tr>
-        <tr>
-            <td>アイドル紹介</td>
-            <td>
-                <%= data.explanation %>
-            </td>
-        </tr>
-    </table>
-    <button onclick="location.href='/idol/edit/<%= id %>'">編集</button>
-    <button onclick="location.href='/idol/deletek/<%= id %>'">削除</button>
-    <button onclick="location.href='/idol'">アイドル名簿に戻る</button>
+    <div class="page">
+        <div class="card">
+            <h2><%= data.name %>の詳細</h2>
+            <table>
+                <tr>
+                    <th>項目</th>
+                    <th>データ</th>
+                </tr>
+                <tr>
+                    <td>ID</td>
+                    <td><%= data.id %></td>
+                </tr>
+                <tr>
+                    <td>名前</td>
+                    <td><%= data.name %></td>
+                </tr>
+                <tr>
+                    <td>年齢</td>
+                    <td><%= data.age %>歳</td>
+                </tr>
+                <tr>
+                    <td>身長</td>
+                    <td><%= data.size %>cm</td>
+                </tr>
+                <tr>
+                    <td>体重</td>
+                    <td><%= data.weight %>kg</td>
+                </tr>
+                <tr>
+                    <td>持ち歌数</td>
+                    <td><%= data.song %>曲</td>
+                </tr>
+                <tr>
+                    <td>実装時期</td>
+                    <td><%= data.period %></td>
+                </tr>
+                <tr>
+                    <td>アイドル紹介</td>
+                    <td><%= data.explanation %></td>
+                </tr>
+            </table>
+            <div class="actions">
+                <button class="btn btn-primary" onclick="location.href='/idol/edit/<%= id %>'">編集</button>
+                <button class="btn btn-danger" onclick="location.href='/idol/deletek/<%= id %>'">削除</button>
+                <button class="btn btn-outline" onclick="location.href='/idol'">アイドル名簿に戻る</button>
+            </div>
+        </div>
+    </div>
 </body>
 
 </html>

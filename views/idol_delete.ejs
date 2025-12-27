@@ -4,33 +4,41 @@
 <head>
     <meta charset="utf-8">
     <title>削除確認</title>
+    <link rel="stylesheet" href="/public/idol.css">
 </head>
 
 <body>
-    <h2>
-        <%= data.name %>の卒業確認!!!!!!
-    </h2>
-    <table>
-        <tr>
-            <th>項目</th>
-            <th>データ</th>
-        </tr>
-        <tr>
-            <td>ID</td>
-            <td>
-                <%= data.id %>
-            </td>
-        </tr>
-        <tr>
-            <td>名前</td>
-            <td>
-                <%= data.name %>
-            </td>
-        </tr>
-    </table>
-    <h3>本当に卒業しましたか？</h3>
-    <button onclick="location.href='/idol/delete/<%= id %>'">削除</button>
-    <button onclick="location.href='/idol/<%= id %>'">アイドル詳細に戻る</button>
+    <div class="page">
+    <div class="main-card">
+        <h2>
+            <%= data.name %>の卒業確認
+        </h2>
+        <table>
+            <tr>
+                <th>項目</th>
+                <th>データ</th>
+            </tr>
+            <tr>
+                <td>ID</td>
+                <td>
+                    <%= data.id %>
+                </td>
+            </tr>
+            <tr>
+                <td>名前</td>
+                <td>
+                    <%= data.name %>
+                </td>
+            </tr>
+        </table>
+        <h3>本当に卒業しましたか？</h3>
+        <div class="button-row">
+            <button class="btn-danger" onclick="location.href='/idol/delete/<%= id %>'">削除</button>
+            <button class="btn-secondary" onclick="location.href='/idol/<%= id %>'">アイドル詳細に戻る</button>
+        </div>
+        <div class="notice">削除すると元に戻せません。内容を再確認してください。</div>
+    </div>
+    </div>
 </body>
 
 </html>

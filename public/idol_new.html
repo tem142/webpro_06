@@ -3,42 +3,43 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>じゃんけん</title>
+    <title>新入生登録</title>
+    <link rel="stylesheet" href="/public/idol.css">
 </head>
 
 <body>
-    <form action="/idol" method="POST">
-        <a>例：初星 学園</a>
-        <input type="text" name="name" required>
-        <label for="name">name:</label><br>
+    <div class="page">
+        <div class="card">
+            <h2>新入生登録</h2>
+            <form action="/idol" method="POST">
+                <label for="name">名前</label>
+                <input id="name" type="text" name="name" placeholder="例：初星 学園" required>
 
-        <a>例：15</a>
-        <input type="text" name="age">
-        <label for="change">age:</label><br>
+                <label for="age">年齢</label>
+                <input id="age" type="number" name="age" placeholder="例：15">
 
-        <a>例：165</a>
-        <input type="text" name="size" required>
-        <label for="passengers">size:</label><br>
+                <label for="size">身長 (cm)</label>
+                <input id="size" type="number" name="size" placeholder="例：165" required>
 
-        <a>例：55</a>
-        <input type="text" name="weight" required>
-        <label for="distance">weight:</label><br>
+                <label for="weight">体重 (kg)</label>
+                <input id="weight" type="number" name="weight" placeholder="例：55" required>
 
-        <a>例：4</a>
-        <input type="text" name="song" required>
-        <label for="distance">song:</label><br>
+                <label for="song">歌唱曲数</label>
+                <input id="song" type="number" name="song" placeholder="例：4" required>
 
-        <a>例：2024年5月16日</a>
-        <input type="text" name="period" required>
-        <label for="distance">period:</label><br>
+                <label for="period">実装時期</label>
+                <input id="period" type="text" name="period" placeholder="例：2024年5月16日" required>
 
-        <a>例：アイドルを目指す姉に感化されアイドルを志した．</a>
-        <input type="text" name="explanation" required>
-        <label for="distance">explanation:</label><br>
+                <label for="explanation">アイドル詳細</label>
+                <textarea id="explanation" name="explanation" placeholder="例：アイドルを目指す姉に感化され..." required></textarea>
 
-        <input type="submit" values="登録">
-        <input type="button" value="アイドル名簿に戻る" onclick="location.href='/idol'">
-    </form>
+                <div class="actions">
+                    <button class="btn btn-primary" type="submit">登録</button>
+                    <button class="btn btn-outline" type="button" onclick="location.href='/idol'">アイドル名簿に戻る</button>
+                </div>
+            </form>
+        </div>
+    </div>
 </body>
 
 </html>
