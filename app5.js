@@ -27,9 +27,9 @@ let station2 = [
 //////////////////////////////////
 
 let idol = [
-  { id: 1, name: "花海 咲季", age: 15, size: 152, weight: 45,  song: 4, period: "2024年5月16日", explanation: "勝ち気で負けず嫌いな元アスリート．妹の花海佑芽とは大の仲良しで，様々なスポーツで競い合ってきたライバル同士．佑芽の才能を誰より評価し，恐れている．" },
-  { id: 2, name: "月村 手毬", age: 15, size: 162, weight: 51,  song: 4, period: "2024年5月16日", explanation: "中等部ナンバーワンユニットの元メンバーであり，すでに一線級の歌唱力を持つ．クールでストイックかと思いきや，甘えん坊で怠け者なトラブルメイカーというような二面性のある少女．" },
-  { id: 3, name: "藤田 ことね", age: 15, size: 156, weight: 40,  song: 4, period: "2024年5月16日", explanation: "人生一発逆転の手段としてアイドルを目指している，可愛い顔には自信のある，がめつい女の子．なぜか過大評価してくる生徒会長・星南のことがちょっぴり苦手．" },
+  { id: 1, name: "花海 咲季", age: 15, size: 152, weight: 45, song: 4, period: "2024年5月16日", explanation: "勝ち気で負けず嫌いな元アスリート．妹の花海佑芽とは大の仲良しで，様々なスポーツで競い合ってきたライバル同士．佑芽の才能を誰より評価し，恐れている．" },
+  { id: 2, name: "月村 手毬", age: 15, size: 162, weight: 51, song: 4, period: "2024年5月16日", explanation: "中等部ナンバーワンユニットの元メンバーであり，すでに一線級の歌唱力を持つ．クールでストイックかと思いきや，甘えん坊で怠け者なトラブルメイカーというような二面性のある少女．" },
+  { id: 3, name: "藤田 ことね", age: 15, size: 156, weight: 40, song: 4, period: "2024年5月16日", explanation: "人生一発逆転の手段としてアイドルを目指している，可愛い顔には自信のある，がめつい女の子．なぜか過大評価してくる生徒会長・星南のことがちょっぴり苦手．" },
 ];
 // 一覧
 app.get("/idol", (req, res) => {
@@ -63,7 +63,7 @@ app.get("/idol/delete/:id", (req, res) => {
 // Create
 app.post("/idol", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  const id = idol.length + 1;
+  const id = Math.max(...idol.map(i => i.id), 0) + 1;
   const name = req.body.name;
   const age = req.body.age;
   const size = req.body.size;
@@ -94,17 +94,17 @@ app.post("/idol/update/:id", (req, res) => {
   idol[req.params.id].period = req.body.period;
   idol[req.params.id].explanation = req.body.explanation;
   console.log(idol);
-  res.redirect('/idol');
+  res.redirect('/idol/' + req.params.id);
 });
 
 let song = [
-  { id: 1, name: "【初星フェス】「Campus mode!!」燕ガシャ", caraname: "雨夜 燕", period: "2025/12/26-2026/1/5", level: 5, songname: "Campus mode!!"},
+  { id: 1, name: "【初星フェス】「Campus mode!!」燕ガシャ", caraname: "雨夜 燕", period: "2025/12/26-2026/1/5", level: 5, songname: "Campus mode!!" },
   { id: 2, name: "Story of Re;IRIS放映記念SSR1.5倍セレクトピックアップガシャ", caraname: "Re;IRIS & Begrazia", period: "2025/12/26-2026/1/5", level: 3, songname: "雨上がりのアイリス & Star-mine" },
-  { id: 3, name: "【step3解禁】「自己肯定感爆上げ↑↑しゅきしゅきソング」ことねガシャ", caraname: "藤田 ことね", period: "2025/12/18-2025/12/26", level: 4, songname: "自己肯定感爆上げ↑↑しゅきしゅきソング"},
-  { id: 4, name: "【step3解禁】「36℃ U･B･U」莉波ガシャ", caraname: "姫崎 莉波", period: "2025/12/18-2025/12/26", level: 4, songname: "36℃ U･B･U"},
-  { id: 5, name: "【恒常】「グースーピー」佑芽ガシャ", caraname: "花海 佑芽", period: "2025/11/28-2025/12/08", level: 3, songname: "グースーピー"},
-  { id: 6, name: "【恒常】「理論武装して」燕ガシャ", caraname: "雨夜 燕", period: "2025/11/16-2025/11/28", level: 2, songname: "理論武装して"},
-  { id: 7, name: "【ライブツアー】「がむしゃらに行こう！」手毬ガシャ", caraname: "月村 手毬", period: "2025/10/10-2025/10/21", level: 5, songname: "がむしゃらに行こう！"},
+  { id: 3, name: "【step3解禁】「自己肯定感爆上げ↑↑しゅきしゅきソング」ことねガシャ", caraname: "藤田 ことね", period: "2025/12/18-2025/12/26", level: 4, songname: "自己肯定感爆上げ↑↑しゅきしゅきソング" },
+  { id: 4, name: "【step3解禁】「36℃ U･B･U」莉波ガシャ", caraname: "姫崎 莉波", period: "2025/12/18-2025/12/26", level: 4, songname: "36℃ U･B･U" },
+  { id: 5, name: "【恒常】「グースーピー」佑芽ガシャ", caraname: "花海 佑芽", period: "2025/11/28-2025/12/08", level: 3, songname: "グースーピー" },
+  { id: 6, name: "【恒常】「理論武装して」燕ガシャ", caraname: "雨夜 燕", period: "2025/11/16-2025/11/28", level: 2, songname: "理論武装して" },
+  { id: 7, name: "【ライブツアー】「がむしゃらに行こう！」手毬ガシャ", caraname: "月村 手毬", period: "2025/10/10-2025/10/21", level: 5, songname: "がむしゃらに行こう！" },
 ];
 // 一覧
 app.get("/song", (req, res) => {
@@ -138,7 +138,7 @@ app.get("/song/delete/:number", (req, res) => {
 // Create
 app.post("/song", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  const id = song.length + 1;
+  const id = Math.max(...song.map(i => i.id), 0) + 1;
   const name = req.body.name;
   const caraname = req.body.caraname;
   const period = req.body.period;
@@ -176,7 +176,7 @@ let newmd = [
   { id: 4, code: "DM25-RP3", name: "邪神vs時皇 ～ビヨンド・ザ・タイム～", release_date: "2025/9/20", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/王道Wの基本となる拡張パック第3弾！" },
   { id: 5, code: "DM25-EX2", name: "王道vs邪道 デュエキングWDreaM 2025", release_date: "2025/10/18", price: 5500, explanation: "1パック9枚入り　1BOX 10パック入り/豪華再録・強力新規カードで大好評の、デュエキングMAXパックの最新版！" },
   { id: 6, code: "DM25-RP4", name: "終淵 ～LOVE＆ABYSS～", release_date: "2025/12/20", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/王道Wの基本となる拡張パック第4弾！" },
-  { id: 7, code: "DM25-EX3", name: "邪神爆発デュエナマイトパック「王道W」", release_date: "2026/1/17", price: 11880, explanation:"1パック10枚入り　1BOX 8パック入り/王道W拡張パック1弾～4弾からカードをセレクションしたフルホイルパック！" },
+  { id: 7, code: "DM25-EX3", name: "邪神爆発デュエナマイトパック「王道W」", release_date: "2026/1/17", price: 11880, explanation: "1パック10枚入り　1BOX 8パック入り/王道W拡張パック1弾～4弾からカードをセレクションしたフルホイルパック！" },
 ];
 // 一覧
 app.get("/dm", (req, res) => {
@@ -210,7 +210,7 @@ app.get("/dm/delete/:number", (req, res) => {
 // Create
 app.post("/dm", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  const id = newmd.length + 1;
+  const id = Math.max(...newmd.map(i => i.id), 0) + 1;
   const code = req.body.code;
   const name = req.body.name;
   const release_date = req.body.release_date;
@@ -281,7 +281,7 @@ app.get("/keiyo2/delete/:number", (req, res) => {
 // Create
 app.post("/keiyo2", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  const id = station2.length + 1;
+  const id = Math.max(...station2.map(i => i.id), 0) + 1;
   const code = req.body.code;
   const name = req.body.name;
   const change = req.body.change;
