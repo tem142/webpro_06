@@ -196,23 +196,23 @@ app.get("/dm/create", (req, res) => {
   res.redirect('/public/dm_new.html');
 });
 // 詳細
-app.get("/dm/:number", (req, res) => {
-  const number = req.params.number;
-  const detail = newmd[number];
-  res.render('dm_detail', { id: number, data: detail });
+app.get("/dm/:id", (req, res) => {
+  const id = req.params.id;
+  const detail = newmd[id];
+  res.render('dm_detail', { id: id, data: detail });
 });
 // Delete confirmation
-app.get("/dm/deletek/:number", (req, res) => {
-  const number = req.params.number;
-  const detail = newmd[number];
-  res.render('dm_delete', { id: number, data: detail });
+app.get("/dm/deletek/:id", (req, res) => {
+  const id = req.params.id;
+  const detail = newmd[id];
+  res.render('dm_delete', { id: id, data: detail });
 });
 // Delete
-app.get("/dm/delete/:number", (req, res) => {
+app.get("/dm/delete/:id", (req, res) => {
   // 本来は削除の確認ページを表示する
   // 本来は削除する番号が存在するか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
-  newmd.splice(req.params.number, 1);
+  newmd.splice(req.params.id, 1);
   res.redirect('/dm');
 });
 // Create
@@ -229,24 +229,24 @@ app.post("/dm", (req, res) => {
   res.render('dm', { data: newmd });
 });
 // Edit
-app.get("/dm/edit/:number", (req, res) => {
+app.get("/dm/edit/:id", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  const number = req.params.number;
-  const detail = newmd[number];
-  res.render('dm_edit', { id: number, data: detail });
+  const id = req.params.id;
+  const detail = newmd[id];
+  res.render('dm_edit', { id: id, data: detail });
 });
 // Update
-app.post("/dm/update/:number", (req, res) => {
+app.post("/dm/update/:id", (req, res) => {
   // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
-  newmd[req.params.number].name = req.body.name;
-  newmd[req.params.number].code = req.body.code;
-  newmd[req.params.number].release_date = req.body.release_date;
-  newmd[req.params.number].price = req.body.price;
-  newmd[req.params.number].explanation = req.body.explanation;
+  newmd[req.params.id].name = req.body.name;
+  newmd[req.params.id].code = req.body.code;
+  newmd[req.params.id].release_date = req.body.release_date;
+  newmd[req.params.id].price = req.body.price;
+  newmd[req.params.id].explanation = req.body.explanation;
   console.log(newmd);
-  const number = req.params.number;
-  res.redirect('/dm/' + number);
+  const id = req.params.id;
+  res.redirect('/dm/' + id);
 });
 
 
