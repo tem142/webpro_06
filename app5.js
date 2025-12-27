@@ -41,23 +41,23 @@ app.get("/idol/create", (req, res) => {
   res.redirect('/public/idol_new.html');
 });
 // 詳細
-app.get("/idol/:number", (req, res) => {
-  const number = req.params.number;
-  const detail = idol[number];
-  res.render('idol_detail', { id: number, data: detail });
+app.get("/idol/:id", (req, res) => {
+  const id = req.params.id;
+  const detail = idol[id];
+  res.render('idol_detail', { id: id, data: detail });
 });
 // Delete confirmation
-app.get("/idol/deletek/:number", (req, res) => {
-  const number = req.params.number;
-  const detail = idol[number];
-  res.render('idol_delete', { id: number, data: detail });
+app.get("/idol/deletek/:id", (req, res) => {
+  const id = req.params.id;
+  const detail = idol[id];
+  res.render('idol_delete', { id: id, data: detail });
 });
 // Delete
-app.get("/idol/delete/:number", (req, res) => {
+app.get("/idol/delete/:id", (req, res) => {
   // 本来は削除の確認ページを表示する
   // 本来は削除する番号が存在するか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
-  idol.splice(req.params.number, 1);
+  idol.splice(req.params.id, 1);
   res.redirect('/idol');
 });
 // Create
@@ -76,23 +76,23 @@ app.post("/idol", (req, res) => {
   res.render('idol', { data: idol });
 });
 // Edit
-app.get("/idol/edit/:number", (req, res) => {
+app.get("/idol/edit/:id", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  const number = req.params.number;
-  const detail = idol[number];
-  res.render('idol_edit', { id: number, data: detail });
+  const id = req.params.id;
+  const detail = idol[id];
+  res.render('idol_edit', { id: id, data: detail });
 });
 // Update
-app.post("/idol/update/:number", (req, res) => {
+app.post("/idol/update/:id", (req, res) => {
   // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
-  idol[req.params.number].name = req.body.name;
-  idol[req.params.number].age = req.body.age;
-  idol[req.params.number].size = req.body.size;
-  idol[req.params.number].weight = req.body.weight;
-  idol[req.params.number].song = req.body.song;
-  idol[req.params.number].period = req.body.period;
-  idol[req.params.number].explanation = req.body.explanation;
+  idol[req.params.id].name = req.body.name;
+  idol[req.params.id].age = req.body.age;
+  idol[req.params.id].size = req.body.size;
+  idol[req.params.id].weight = req.body.weight;
+  idol[req.params.id].song = req.body.song;
+  idol[req.params.id].period = req.body.period;
+  idol[req.params.id].explanation = req.body.explanation;
   console.log(idol);
   res.redirect('/idol');
 });
@@ -170,45 +170,45 @@ app.post("/song/update/:number", (req, res) => {
 });
 
 let newmd = [
-  { id: 1, code: "DM24-EX4", name: "「異次元の超獣使い」", relese_data: "2025/3/15", price: 5940, explanation: "1パック8枚入り　1BOX 12パック入り/VTuber/バーチャルライバーグループ「にじさんじ」とデュエマがコラボレーションしたEXパックが新登場！" },
-  { id: 2, code: "DM25-RP2", name: "邪神vs邪神Ⅱ ～ジャシン・イン・ザ・シェル～", relese_data: "2025/6/21", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/新章王道W（ダブル）の基本となる拡張パック第2弾！" },
-  { id: 3, code: "DM25-EX1", name: "愛感謝祭 ヒロインBEST", relese_data: "2025/7/19", price: 5280, explanation: "1パック6枚入り　1BOX 16パック入り/ファンタジーBESTに続く、種族をフォーカスした「BEST」シリーズ第3弾！今回も新たに５種族をフィーチャー！テーマは「デュエマのヒロイン」！" },
-  { id: 4, code: "DM25-RP3", name: "邪神vs時皇 ～ビヨンド・ザ・タイム～", relese_data: "2025/9/20", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/王道Wの基本となる拡張パック第3弾！" },
-  { id: 5, code: "DM25-EX2", name: "王道vs邪道 デュエキングWDreaM 2025", relese_data: "2025/10/18", price: 5500, explanation: "1パック9枚入り　1BOX 10パック入り/豪華再録・強力新規カードで大好評の、デュエキングMAXパックの最新版！" },
-  { id: 6, code: "DM25-RP4", name: "終淵 ～LOVE＆ABYSS～", relese_data: "2025/12/20", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/王道Wの基本となる拡張パック第4弾！" },
-  { id: 7, code: "DM25-EX3", name: "邪神爆発デュエナマイトパック「王道W」", relese_data: "2026/1/17", price: 11880, explanation:"1パック10枚入り　1BOX 8パック入り/王道W拡張パック1弾～4弾からカードをセレクションしたフルホイルパック！" },
+  { id: 1, code: "DM24-EX4", name: "「異次元の超獣使い」", release_date: "2025/3/15", price: 5940, explanation: "1パック8枚入り　1BOX 12パック入り/VTuber/バーチャルライバーグループ「にじさんじ」とデュエマがコラボレーションしたEXパックが新登場！" },
+  { id: 2, code: "DM25-RP2", name: "邪神vs邪神Ⅱ ～ジャシン・イン・ザ・シェル～", release_date: "2025/6/21", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/新章王道W（ダブル）の基本となる拡張パック第2弾！" },
+  { id: 3, code: "DM25-EX1", name: "愛感謝祭 ヒロインBEST", release_date: "2025/7/19", price: 5280, explanation: "1パック6枚入り　1BOX 16パック入り/ファンタジーBESTに続く、種族をフォーカスした「BEST」シリーズ第3弾！今回も新たに５種族をフィーチャー！テーマは「デュエマのヒロイン」！" },
+  { id: 4, code: "DM25-RP3", name: "邪神vs時皇 ～ビヨンド・ザ・タイム～", release_date: "2025/9/20", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/王道Wの基本となる拡張パック第3弾！" },
+  { id: 5, code: "DM25-EX2", name: "王道vs邪道 デュエキングWDreaM 2025", release_date: "2025/10/18", price: 5500, explanation: "1パック9枚入り　1BOX 10パック入り/豪華再録・強力新規カードで大好評の、デュエキングMAXパックの最新版！" },
+  { id: 6, code: "DM25-RP4", name: "終淵 ～LOVE＆ABYSS～", release_date: "2025/12/20", price: 6000, explanation: "1パック5枚入り　1BOX 30パック入り/王道Wの基本となる拡張パック第4弾！" },
+  { id: 7, code: "DM25-EX3", name: "邪神爆発デュエナマイトパック「王道W」", release_date: "2026/1/17", price: 11880, explanation:"1パック10枚入り　1BOX 8パック入り/王道W拡張パック1弾～4弾からカードをセレクションしたフルホイルパック！" },
 ];
 // 一覧
-app.get("/md", (req, res) => {
+app.get("/dm", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  res.render('md', { data: newmd });
+  res.render('dm', { data: newmd });
 });
 // Create
-app.get("/md/create", (req, res) => {
-  res.redirect('/public/md_new.html');
+app.get("/dm/create", (req, res) => {
+  res.redirect('/public/dm_new.html');
 });
 // 詳細
-app.get("/md/:number", (req, res) => {
+app.get("/dm/:number", (req, res) => {
   const number = req.params.number;
   const detail = newmd[number];
-  res.render('md_detail', { id: number, data: detail });
+  res.render('dm_detail', { id: number, data: detail });
 });
 // Delete confirmation
-app.get("/md/deletek/:number", (req, res) => {
+app.get("/dm/deletek/:number", (req, res) => {
   const number = req.params.number;
   const detail = newmd[number];
-  res.render('md_delete', { id: number, data: detail });
+  res.render('dm_delete', { id: number, data: detail });
 });
 // Delete
-app.get("/md/delete/:number", (req, res) => {
+app.get("/dm/delete/:number", (req, res) => {
   // 本来は削除の確認ページを表示する
   // 本来は削除する番号が存在するか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
   newmd.splice(req.params.number, 1);
-  res.redirect('/md');
+  res.redirect('/dm');
 });
 // Create
-app.post("/md", (req, res) => {
+app.post("/dm", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
   const id = newmd.length + 1;
   const code = req.body.code;
@@ -218,17 +218,17 @@ app.post("/md", (req, res) => {
   const explanation = req.body.explanation;
   newmd.push({ id: id, code: code, name: name, release_date: release_date, price: price, explanation: explanation });
   console.log(newmd);
-  res.render('md', { data: newmd });
+  res.render('dm', { data: newmd });
 });
 // Edit
-app.get("/md/edit/:number", (req, res) => {
+app.get("/dm/edit/:number", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
   const number = req.params.number;
   const detail = newmd[number];
-  res.render('md_edit', { id: number, data: detail });
+  res.render('dm_edit', { id: number, data: detail });
 });
 // Update
-app.post("/md/update/:number", (req, res) => {
+app.post("/dm/update/:number", (req, res) => {
   // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
   newmd[req.params.number].name = req.body.name;
@@ -238,7 +238,7 @@ app.post("/md/update/:number", (req, res) => {
   newmd[req.params.number].explanation = req.body.explanation;
   console.log(newmd);
   const number = req.params.number;
-  res.redirect('/md' + number);
+  res.redirect('/dm/' + number);
 });
 
 
