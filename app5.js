@@ -78,8 +78,9 @@ app.post("/idol", (req, res) => {
 // Edit
 app.get("/idol/edit/:id", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  const id = req.params.id;
-  const detail = idol[id];
+  const id = Number(req.params.id);
+  const detail = song.find(item => item.id === id);
+  if (!detail) return res.status(404).send("not found");
   res.render('idol_edit', { id: id, data: detail });
 });
 // Update
@@ -159,22 +160,25 @@ app.post("/song", (req, res) => {
 // Edit
 app.get("/song/edit/:id", (req, res) => {
   // 本来ならここにDBとのやり取りが入る
-  const id = req.params.id;
-  const detail = song[id];
+  const id = Number(req.params.id);
+  const detail = song.find(item => item.id === id);
+  if (!detail) return res.status(404).send("not found");
   res.render('song_edit', { id: id, data: detail });
 });
 // Update
 app.post("/song/update/:id", (req, res) => {
   // 本来は変更する番号が存在するか，各項目が正しいか厳重にチェックする
   // 本来ならここにDBとのやり取りが入る
-  song[req.params.id].name = req.body.name;
-  song[req.params.id].caraname = req.body.caraname;
-  song[req.params.id].period = req.body.period;
-  song[req.params.id].level = req.body.level;
-  song[req.params.id].songname = req.body.songname;
+  const id = Number(req.params.id);
+  const item = song.find(s => s.id === id);
+  if (!item) return res.status(404).send("not found");
+  item.name = req.body.name;
+  item.caraname = req.body.caraname;
+  item.period = req.body.period;
+  item.level = req.body.level;
+  item.songname = req.body.songname;
   console.log(song);
-  const id = req.params.id;
-  res.redirect('/song/' + id);
+  res.redirect(`/song/${id}`);
 });
 
 let newmd = [
